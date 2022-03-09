@@ -1,8 +1,8 @@
 const express = require('express')
+const routes = require('./src/routes')
+
 const app = express()
 
-app.get('/', (req, res) => {
-    res.send('Running')
-})
+app.use(routes)
 
 app.listen(3000);
