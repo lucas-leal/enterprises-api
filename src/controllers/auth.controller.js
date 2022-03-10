@@ -9,7 +9,7 @@ module.exports.authorize = (req, res) => {
         throw new UserError('Wrong credentials')
     }
 
-    let accessToken = jwt.sign({}, process.env.PRIVATE_KEY, {expiresIn: 60})
+    let accessToken = jwt.sign({}, process.env.PRIVATE_KEY, {expiresIn: 3600})
 
     res.send({accessToken})
 }
