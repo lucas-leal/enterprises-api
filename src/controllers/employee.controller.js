@@ -27,7 +27,7 @@ router.post('/', async (req, res, next) => {
             state: 'MG',
             zipCode: '30890000',
             country: 'Brazil',
-            EmployeeId: employee.id
+            employeeId: employee.id
         });
     
         res.send(employee);

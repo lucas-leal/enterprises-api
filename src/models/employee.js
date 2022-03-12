@@ -42,6 +42,12 @@ Employee.init({
     tableName: 'employees'
 });
 
-Employee.hasOne(Address);
+Employee.hasOne(Address, {
+    foreignKey: {
+        name: 'employeeId',
+        allowNull: false,
+        unique: true
+    }
+});
 
 module.exports = Employee;
