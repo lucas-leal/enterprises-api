@@ -2,4 +2,4 @@ require('dotenv').config();
 
 const User = require('./user');
 
-User.sync();
+User.sync({force: true});
