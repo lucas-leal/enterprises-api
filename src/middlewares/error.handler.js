@@ -1,4 +1,4 @@
-const UserError = require('../user.error')
+const UserError = require('../user.error');
 
 module.exports = (err, req, res, next) => {
     let response = {message: err.message};
@@ -7,8 +7,8 @@ module.exports = (err, req, res, next) => {
         response.stack = err.stack;
     }
     
-    let status = err instanceof UserError ? 400 : 500
+    let status = err instanceof UserError ? 400 : 500;
 
-    res.status(status)
-    res.send(response)
+    res.status(status);
+    res.send(response);
 }
