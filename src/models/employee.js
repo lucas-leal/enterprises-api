@@ -1,7 +1,8 @@
 const { DataTypes, Model, UUIDV4 } = require('sequelize');
 const sequelize = require('./sequelize')
 
-const Address = require('./address')
+const Address = require('./address');
+const User = require('./user');
 
 class Employee extends Model { }
 
@@ -43,6 +44,14 @@ Employee.init({
 });
 
 Employee.hasOne(Address, {
+    foreignKey: {
+        name: 'employeeId',
+        allowNull: false,
+        unique: true
+    }
+});
+
+Employee.hasOne(User, {
     foreignKey: {
         name: 'employeeId',
         allowNull: false,
