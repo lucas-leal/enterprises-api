@@ -1,8 +1,8 @@
 require('dotenv').config();
 
-const Employee = require('./employee');
-const Address = require('./address');
-const User = require('./user');
+const Employee = require('../models/employee');
+const Address = require('../models/address');
+const User = require('../models/user');
 
 let refreshDb = async () => {
     await User.drop();

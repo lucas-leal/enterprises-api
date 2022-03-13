@@ -1,5 +1,5 @@
 const { DataTypes, Model, UUIDV4 } = require('sequelize');
-const sequelize = require('./sequelize')
+const sequelize = require('../db/sequelize')
 
 const Address = require('./address');
 const User = require('./user');
