@@ -1,4 +1,16 @@
-class HttpError extends Error {}
+class HttpError extends Error {
+    #errors;
+
+    constructor(message, errors) {
+        super(message);
+
+        this.#errors = errors;
+    }
+
+    get errors() {
+        return this.#errors;
+    }
+}
 
 class BadRequest extends HttpError {
     get httpCode() {
