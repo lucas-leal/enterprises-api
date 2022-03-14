@@ -1,10 +1,11 @@
 const express = require('express');
 const Address = require('../models/address');
-const router = express.Router();
 
 const Employee = require('../models/employee');
-
 const scopes = require('../middlewares/scopes.middleware');
+const validation = require('../middlewares/validation.middleware');
+
+const router = express.Router();
 
 router.get('/', scopes('employees.list'), async (req, res) => {
     const employees = await Employee.findAll({include: Address});
@@ -12,7 +13,11 @@ router.get('/', scopes('employees.list'), async (req, res) => {
     res.send(employees);
 });
 
-router.post('/', scopes('employees.create'), async (req, res, next) => {
+router.post(
+    '/',
+    scopes('employees.create'),
+    validation.required(['name', 'documentNumber', 'birthDate', 'position', 'startDate', 'salary', 'address']),
+    async (req, res, next) => {
     try {
         const employee = await Employee.create({
             name: req.body.name,
