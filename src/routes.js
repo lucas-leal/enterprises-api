@@ -9,8 +9,8 @@ const userController = require('./controllers/user.controller');
 const employeeController = require('./controllers/employee.controller.js');
 
 router.get('/', healthController);
-router.post('/oauth/authorize', authController.authorize);
 
+router.use('/oauth', authController);
 router.use(authMiddleware);
 
 router.use('/users', userController);

@@ -1,9 +1,14 @@
+const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+
 const { BadRequest } = require('../errors');
 const User = require('../models/user');
+const validation = require('../middlewares/validation.middleware');
 
-module.exports.authorize = async (req, res, next) => {
+const router = express.Router();
+
+router.post('/authorize', validation.required(['username', 'password']), async (req, res, next) => {
     try {
         const user = await User.findOne({where: {username: req.body.username}});
 
@@ -23,4 +28,6 @@ module.exports.authorize = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+});
+
+module.exports = router;
