@@ -4,13 +4,15 @@ const router = express.Router();
 
 const Employee = require('../models/employee');
 
-router.get('/', async (req, res) => {
+const scopes = require('../middlewares/scopes.middleware');
+
+router.get('/', scopes('employees.list'), async (req, res) => {
     const employees = await Employee.findAll({include: Address});
 
     res.send(employees);
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', scopes('employees.create'), async (req, res, next) => {
     try {
         const employee = await Employee.create({
             name: req.body.name,
