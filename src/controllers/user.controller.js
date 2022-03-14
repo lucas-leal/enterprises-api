@@ -5,6 +5,7 @@ const User = require('../models/user');
 const scopes = require('../middlewares/scopes.middleware');
 const validation = require('../middlewares/validation.middleware');
 const { BadRequest } = require('../errors');
+const Employee = require('../models/employee');
 
 const router = express.Router();
 
@@ -63,6 +64,12 @@ async function checkUser(req) {
 
     if (user) {
         throw new BadRequest('The employee already has a user', [{param: 'employeeId', message: "The employee '"+req.body.employeeId+"' already has a user"}]);
+    }
+
+    const employee = await Employee.findByPk(req.body.employeeId);
+
+    if (!employee) {
+        throw new BadRequest('The employee does not exist', [{param: 'employeeId', message: "The employee '"+req.body.employeeId+"' does not exist"}]);
     }
 }
 
