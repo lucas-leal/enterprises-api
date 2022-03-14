@@ -13,8 +13,7 @@ router.post('/oauth/authorize', authController.authorize);
 
 router.use(authMiddleware);
 
-router.post('/users', userController.create);
-
+router.use('/users', userController);
 router.use('/employees', employeeController);
 
 module.exports = router;
