@@ -10,4 +10,10 @@ class Unauthorized extends UserError {
     }
 }
 
-module.exports = {UserError, Unauthorized};
+class Forbidden extends UserError {
+    get httpCode() {
+        return 403;
+    }
+}
+
+module.exports = {UserError, Unauthorized, Forbidden};

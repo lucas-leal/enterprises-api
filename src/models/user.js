@@ -18,6 +18,10 @@ User.init({
     password: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    scopes: {
+        type: DataTypes.STRING,
+        allowNull: false
     }
 }, {
     sequelize,

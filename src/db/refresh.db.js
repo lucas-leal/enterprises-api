@@ -34,6 +34,7 @@ let refreshDb = async () => {
     User.create({
         username: 'admin',
         password: '$2b$04$W8MipPZhsljb.RAy/LRNu.JnrfK5mFUJb8Y.WiRajeL7lOnqY6qsi',
+        scopes: 'users.list users.create employees.list employees.create',
         employeeId: employee.id
     });
 }

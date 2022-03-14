@@ -9,7 +9,9 @@ module.exports.authorize = async (req, res, next) => {
 
         if (user instanceof User) {
             if (bcrypt.compareSync(req.body.password, user.password)) {
-                const accessToken = jwt.sign({}, process.env.PRIVATE_KEY, {expiresIn: 3600});
+                const payload = {scopes: user.scopes};
+
+                const accessToken = jwt.sign(payload, process.env.PRIVATE_KEY, {expiresIn: 3600});
 
                 res.send({accessToken});
                 
