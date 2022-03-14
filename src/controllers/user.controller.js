@@ -6,6 +6,12 @@ const scopes = require('../middlewares/scopes.middleware');
 
 const router = express.Router();
 
+router.get('/', scopes('users.list'), async (req, res) => {
+    const users = await User.findAll({attributes: ['id', 'username', 'employeeId', 'createdAt', 'updatedAt']});
+
+    res.send(users);
+});
+
 router.post('/', scopes('users.create'), async (req, res, next) => {
     try {
         let salt = Math.random();
