@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const scopes = require('../middlewares/scopes.middleware');
 const validation = require('../middlewares/validation.middleware');
+const { BadRequest } = require('../errors');
 
 const router = express.Router();
 
@@ -26,6 +27,8 @@ router.post(
     validation.required(['username', 'password', 'scopes', 'employeeId']),
     async (req, res, next) => {
         try {
+            await checkUser(req);
+
             let salt = Math.random();
             let hash = bcrypt.hashSync(req.body.password, salt)
             
@@ -47,5 +50,19 @@ router.post(
         }
     }
 );
+
+async function checkUser(req) {
+    let user = await User.findOne({where: {username: req.body.username}});
+
+    if (user) {
+        throw new BadRequest('User already exists', [{param: 'username', message: "The user with username '"+req.body.username+"' already exists"}]);
+    }
+
+    user = await User.findOne({where: {employeeId: req.body.employeeId}});
+
+    if (user) {
+        throw new BadRequest('The employee already has a user', [{param: 'employeeId', message: "The employee '"+req.body.employeeId+"' already has a user"}]);
+    }
+}
 
 module.exports = router;
