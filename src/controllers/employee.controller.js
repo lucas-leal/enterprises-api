@@ -41,6 +41,7 @@ router.post(
                 employeeId: employee.id
             });
         
+            res.status(201);
             res.send(employee);
         } catch (error) {
             next(error);

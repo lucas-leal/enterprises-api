@@ -39,6 +39,7 @@ router.post(
                 employeeId: req.body.employeeId
             });
 
+            res.status(201);
             res.send({
                 id: user.id, 
                 username: user.username,
