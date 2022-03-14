@@ -38,7 +38,9 @@ router.post(
 
             res.send({
                 id: user.id, 
-                username: user.username
+                username: user.username,
+                scopes: user.scopes,
+                employeeId: user.employeeId
             });
         } catch (error) {
             next(error);
@@ -47,4 +49,3 @@ router.post(
 );
 
 module.exports = router;
-
