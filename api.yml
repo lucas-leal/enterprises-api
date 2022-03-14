@@ -1,0 +1,169 @@
+openapi: 3.0.0
+info:
+  description: "Enterprises API"
+  version: 1.0.0
+  title: Enterprises API
+paths:
+  /:
+    get:
+      summary: Health endpoint
+      responses:
+        "200":
+          description: API Health
+  /oauth/authorize:
+    post:
+      summary: Get JWT token
+      requestBody:
+        $ref: "#/components/requestBodies/Credentials"
+      responses:
+        "200":
+          description: Success
+  /users:
+    get:
+      summary: Get all users
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+    post:
+      summary: Create a new user
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: "#/components/requestBodies/User"
+      responses:
+        "201":
+          description: Created
+  /employees:
+    get:
+      summary: Get all employees
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success
+    post:
+      summary: Create a employee
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: "#/components/requestBodies/Employee"
+      responses:
+        "201":
+          description: Created
+servers:
+  - url: http:/localhost:3000
+components:
+  requestBodies:
+    Credentials:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Credentials"
+      description: Credentials object
+      required: true
+    User:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/User"
+      description: Company object
+      required: true
+    Employee:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Employee"
+      description: Employee object
+      required: true
+  schemas:
+    Credentials:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+      required:
+        - username
+        - password
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        employeeId:
+          type: string
+        scopes:
+          type: string
+      required:
+        - username
+        - password
+        - employeeId
+        - scopes
+    Employee:
+      type: object
+      properties:
+        name:
+          type: string
+        documentNumber:
+          type: string
+        birthDate:
+          type: string
+        position:
+          type: string
+        startDate:
+          type: string
+        salary:
+          type: number
+        address:
+          type: object
+          properties:
+            addressLine:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            zipCode:
+              type: string
+            country:
+              type: string
+          
+      required:
+        - name
+        - documentNumber
+        - birthDate
+        - position
+        - startDate
+        - salary
+    
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
