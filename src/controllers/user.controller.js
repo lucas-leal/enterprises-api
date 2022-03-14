@@ -7,7 +7,14 @@ const scopes = require('../middlewares/scopes.middleware');
 const router = express.Router();
 
 router.get('/', scopes('users.list'), async (req, res) => {
-    const users = await User.findAll({attributes: ['id', 'username', 'employeeId', 'createdAt', 'updatedAt']});
+    const users = await User.findAll({attributes: [
+        'id',
+        'username',
+        'scopes',
+        'employeeId',
+        'createdAt',
+        'updatedAt'
+    ]});
 
     res.send(users);
 });
