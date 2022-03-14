@@ -1,19 +1,21 @@
-class UserError extends Error {
+class HttpError extends Error {}
+
+class BadRequest extends HttpError {
     get httpCode() {
         return 400;
     }
 }
 
-class Unauthorized extends UserError {
+class Unauthorized extends HttpError {
     get httpCode() {
         return 401;
     }
 }
 
-class Forbidden extends UserError {
+class Forbidden extends HttpError {
     get httpCode() {
         return 403;
     }
 }
 
-module.exports = {UserError, Unauthorized, Forbidden};
+module.exports = {HttpError, BadRequest, Unauthorized, Forbidden};

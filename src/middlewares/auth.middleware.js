@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
-const { UserError, Unauthorized } = require('../errors');
+const { Unauthorized, BadRequest } = require('../errors');
 
 module.exports = (req, res, next) => {
     if (!req.headers.authorization) {
-        throw new UserError('The Authorization header is required');
+        throw new BadRequest('The Authorization header is required');
     }
 
     let token = req.headers.authorization.split('Bearer ')[1];

@@ -1,4 +1,4 @@
-const { UserError } = require("../errors");
+const { HttpError } = require("../errors");
 
 module.exports = (err, req, res, next) => {
     let response = {message: err.message};
@@ -7,7 +7,7 @@ module.exports = (err, req, res, next) => {
         response.stack = err.stack;
     }
 
-    let status = err instanceof UserError ? err.httpCode : 500;
+    let status = err instanceof HttpError ? err.httpCode : 500;
 
     res.status(status);
     res.send(response);

@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { UserError } = require('../errors');
+const { BadRequest } = require('../errors');
 const User = require('../models/user');
 
 module.exports.authorize = async (req, res, next) => {
@@ -19,7 +19,7 @@ module.exports.authorize = async (req, res, next) => {
             }
         }
 
-        throw new UserError('Wrong credentials');
+        throw new BadRequest('Wrong credentials');
     } catch (error) {
         next(error);
     }
