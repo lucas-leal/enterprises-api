@@ -5,6 +5,8 @@ const Employee = require('../models/employee');
 const scopes = require('../middlewares/scopes.middleware');
 const validation = require('../middlewares/validation.middleware');
 
+const { BadRequest } = require('../errors');
+
 const router = express.Router();
 
 router.get('/', scopes('employees.list'), async (req, res) => {
@@ -19,6 +21,8 @@ router.post(
     validation.required(['name', 'documentNumber', 'birthDate', 'position', 'startDate', 'salary', 'address']),
     async (req, res, next) => {
         try {
+            await checkEmployee(req);
+
             const employee = await Employee.create({
                 name: req.body.name,
                 documentNumber: req.body.documentNumber,
@@ -28,12 +32,12 @@ router.post(
                 salary: req.body.salary
             });
         
-            const address = await Address.create({
-                addressLine: 'foo',
-                city: 'Belo Horizonte',
-                state: 'MG',
-                zipCode: '30890000',
-                country: 'Brazil',
+            await Address.create({
+                addressLine: req.body.address.addressLine,
+                city: req.body.address.city,
+                state: req.body.address.state,
+                zipCode: req.body.address.zipCode,
+                country: req.body.address.country,
                 employeeId: employee.id
             });
         
@@ -43,5 +47,13 @@ router.post(
         }
     }
 );
+
+async function checkEmployee(req) {
+    const employee = await Employee.findOne({where: {documentNumber: req.body.documentNumber}});
+
+    if (employee) {
+        throw new BadRequest('Employee already exists', [{param: 'documentNumber', message: "The employee with document number '"+req.body.documentNumber+"' already exists"}])
+    }
+}
 
 module.exports = router;
